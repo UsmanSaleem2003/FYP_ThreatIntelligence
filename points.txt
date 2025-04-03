@@ -1,14 +1,9 @@
 run virtual environment on directory: 
 ./FYPproject
 
+using command: venv\Scripts\Activate
+
 
 
 database name is: FypThreatIntelligence
 database password is: Fyp2
-
-
-git will be initialized at root directory
-./FYPproject
-
-
-
