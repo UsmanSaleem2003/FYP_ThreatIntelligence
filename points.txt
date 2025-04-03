@@ -1,0 +1,14 @@
+run virtual environment on directory: 
+./FYPproject
+
+
+
+database name is: FypThreatIntelligence
+database password is: Fyp2
+
+
+git will be initialized at root directory
+./FYPproject
+
+
+
