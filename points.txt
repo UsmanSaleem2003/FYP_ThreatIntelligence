@@ -7,3 +7,16 @@ using command: venv\Scripts\Activate
 
 database name is: FypThreatIntelligence
 database password is: Fyp2
+
+
+start the project: run command in directory: ./FYPproject/backend
+command to run: python manage.py startapp api
+
+
+A)_ In directory: ./FYPproject/backend: 
+run command: 
+*python manage.py makemigrations*
+to make migrations.
+
+B)_ after making migrations, run command: 
+*python manage.py migrate* 
