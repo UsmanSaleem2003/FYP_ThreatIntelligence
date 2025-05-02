@@ -5,9 +5,11 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import RegistrationPortal from "./pages/registration_portal/registration_portal";
 import PrivateRoute from "./utils/PrivateRoute";
+import { useContext } from "react";
+import AuthContext from "./context/AuthContext";
 
 function App() {
-  const isLoggedIn = !!localStorage.getItem("access");
+  const { isLoggedIn } = useContext(AuthContext);
 
   return (
     <BrowserRouter>
