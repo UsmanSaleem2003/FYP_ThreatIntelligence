@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import "./Sidebar.css";
 import home_icon from "../Assets/home_icon.png";
 import network_traffic_icon from "../Assets/network_traffic_icon.png";
-import threat_history_icon from "../Assets/activity_history_icon.png"
-import phishing_email_icon from "../Assets/phishing_email_icon.png"
+import threat_history_icon from "../Assets/activity_history_icon.png";
+import phishing_email_icon from "../Assets/phishing_email_icon.png";
 import logout_icon from "../Assets/logout_icon.png";
 import profile_icon from "../Assets/profile_icon.png";
 
@@ -12,46 +12,33 @@ export default function Sidebar() {
     const [user, setUser] = useState(null);
     const [refresh, setRefresh] = useState(false);
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const token = localStorage.getItem("access");
+            if (!token) return;
 
-    // useEffect(() => {
-    //     const fetchUserData = async () => {
-    //         const token = localStorage.getItem("token");
-    //         if (!token) {
-    //             logout();
-    //         }
+            try {
+                const response = await fetch("http://localhost:8000/api/profile/", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
 
-    //         try {
-    //             const response = await fetch("http://localhost:5000/api/user/user-data", {
-    //                 method: "GET",
-    //                 headers: {
-    //                     "Content-Type": "application/json",
-    //                     Authorization: `Bearer ${token}`,
-    //                 },
-    //             });
+                const data = await response.json();
+                if (response.ok) {
+                    setUser(data);
+                } else {
+                    console.error("Error fetching user profile:", data);
+                }
+            } catch (error) {
+                console.error("Error fetching user profile:", error);
+            }
+        };
 
-    //             const data = await response.json();
-    //             if (response.ok) {
-    //                 let profilePicUrl = profilePlaceholder;
-    //                 if (data.user.profilePic) {
-    //                     profilePicUrl = `data:image/jpeg;base64,${data.user.profilePic}`;
-    //                 }
-
-    //                 setUser({
-    //                     ...data.user,
-    //                     profilePic: profilePicUrl,
-    //                 });
-
-    //                 console.log(data.user);
-    //             } else {
-    //                 console.error("Error fetching user data:", data.message);
-    //             }
-    //         } catch (error) {
-    //             console.error("Error fetching user data:", error);
-    //         }
-    //     };
-
-    //     fetchUserData();
-    // }, [refresh]);
+        fetchUserData();
+    }, [refresh]);
 
     const logout = () => {
         localStorage.removeItem("access");
@@ -62,12 +49,9 @@ export default function Sidebar() {
         setRefresh((prev) => !prev);
     };
 
-
-
     return (
         <div className="sidebar">
             <div className="profile-section">
-                {/* <img src={profilePlaceholder} alt="Profile" className="profile-image" /> */}
                 <h2 className="user-name">{user?.username || "Guest"}</h2>
                 <p className="user-email">{user?.email || "Not logged in"}</p>
             </div>

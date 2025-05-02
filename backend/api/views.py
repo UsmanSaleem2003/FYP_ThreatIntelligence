@@ -3,10 +3,10 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
 from rest_framework import generics, serializers
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -26,20 +26,8 @@ class CreateUserView(generics.CreateAPIView):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login_user(request):
-    print("LOGIN VIEW HIT")  # ✅ Confirm view is reached
-
-    print("Raw body:", request.body)
-    print("Content type:", request.content_type)
-
-    try:
-        print("Parsed data:", request.data)
-    except Exception as e:
-        print("Failed to parse request.data:", e)
-
     username = request.data.get('username')
     password = request.data.get('password')
-
-    print(f"Trying login with username: {username}, password: {password}")
 
     user = authenticate(username=username, password=password)
     if user:
@@ -50,3 +38,18 @@ def login_user(request):
             'username': user.username,
         })
     return Response({'error': 'Invalid Credentials'}, status=401)
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_profile(request):
+    user = request.user
+    return Response({
+        "username": user.username,
+        "email": user.email,
+        "is_staff": user.is_staff,
+        "is_superuser": user.is_superuser,
+        "date_joined": user.date_joined,
+        "last_login": user.last_login,
+    })

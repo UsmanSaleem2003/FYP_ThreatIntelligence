@@ -8,19 +8,35 @@ const RegistrationPortal = () => {
     const [formData, setFormData] = useState({
         username: "",
         email: "",
-        password: ""
+        password: "",
+        first_name: "",
+        last_name: "",
+        is_staff: false,
+        is_active: true
     });
 
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, type, value, checked } = e.target;
+        setFormData({
+            ...formData,
+            [name]: type === "checkbox" ? checked : value
+        });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.password !== confirmPassword) {
+            setError(true);
+            setErrorMessage("Passwords do not match.");
+            return;
+        }
+
         const csrfToken = getCSRFToken();
         try {
             const response = await axios.post(
@@ -57,11 +73,29 @@ const RegistrationPortal = () => {
         }
     };
 
+    const passwordMatch = confirmPassword === formData.password;
+
     return (
         <div className="signup-container">
             <div className="signup-box">
                 <h2>User Registration</h2>
                 <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        name="first_name"
+                        placeholder="First Name"
+                        value={formData.first_name}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="last_name"
+                        placeholder="Last Name"
+                        value={formData.last_name}
+                        onChange={handleChange}
+                        required
+                    />
                     <input
                         type="text"
                         name="username"
@@ -79,19 +113,57 @@ const RegistrationPortal = () => {
                         required
                     />
                     <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         name="password"
                         placeholder="Password"
                         value={formData.password}
                         onChange={handleChange}
                         required
                     />
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        name="confirm_password"
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className={confirmPassword ? (passwordMatch ? "valid-password" : "invalid-password") : ""}
+                        required
+                    />
+
+                    <div className="checkbox-container">
+                        <input
+                            type="checkbox"
+                            id="showPassword"
+                            checked={showPassword}
+                            onChange={() => setShowPassword(!showPassword)}
+                        />
+                        <label htmlFor="showPassword">Show Password</label>
+                    </div>
+
+                    <div className="checkbox-group">
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="is_staff"
+                                checked={formData.is_staff}
+                                onChange={handleChange}
+                            />
+                            Admin Access
+                        </label>
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="is_active"
+                                checked={formData.is_active}
+                                onChange={handleChange}
+                            />
+                            Is Active
+                        </label>
+                    </div>
+
                     <button type="submit" className="signup-btn">Signup</button>
                     {error && <div className="error-message">{errorMessage}</div>}
                 </form>
-                <p className="signup-link">
-                    Already have an account? <Link to="/login">Login Here</Link>
-                </p>
             </div>
         </div>
     );

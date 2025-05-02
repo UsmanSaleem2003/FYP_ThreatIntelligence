@@ -6,7 +6,7 @@
   padding-right: 40px;
   margin: 0;
   font-family: "Poppins", sans-serif;
-  background: #007bff;
+  background: #0c2c4e;
 }
 
 .login-box {
@@ -42,13 +42,15 @@ input {
 }
 
 .checkbox-container input {
-  width: auto;
+  width: 18px;
+  height: 18px;
   margin-right: 8px;
+  outline: none;
 }
 
 .checkbox-container label {
   font-size: 14px;
-  color: #555;
+  color: #444;
 }
 
 .login-btn {
@@ -57,7 +59,7 @@ input {
   margin-top: 15px;
   border: none;
   border-radius: 5px;
-  background: #007bff;
+  background: #0c2c4e;
   color: white;
   font-size: 18px;
   cursor: pointer;

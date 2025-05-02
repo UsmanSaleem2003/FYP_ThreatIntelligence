@@ -6,14 +6,14 @@
   margin: 0;
   padding: 40px 0;
   font-family: "Poppins", sans-serif;
-  background: #007bff;
+  background: #0c2c4e;
 }
 
 .signup-box {
   background: white;
   padding: 40px 60px;
   border-radius: 10px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.3);
   text-align: center;
   width: 350px;
   animation: fadeIn 0.5s ease-in-out;
@@ -31,6 +31,20 @@ input {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+  transition: all 0.3s ease;
+  outline: 1px solid rgb(197, 197, 226);
+}
+
+input.invalid-password {
+  border: 2px solid red;
+  box-shadow: 0 0 5px red;
+  outline: none;
+}
+
+input.valid-password {
+  border: 2px solid green;
+  box-shadow: 0 0 5px green;
+  outline: none;
 }
 
 .signup-btn {
@@ -39,7 +53,7 @@ input {
   margin-top: 15px;
   border: none;
   border-radius: 5px;
-  background: #007bff;
+  background: #0c2c4e;
   color: white;
   font-size: 18px;
   cursor: pointer;
@@ -58,20 +72,44 @@ input {
   font-weight: bold;
 }
 
-.signup-link {
-  margin-top: 15px;
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  margin-left: 5px;
+}
+
+.checkbox-group input {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  outline: none;
+}
+
+.checkbox-group label {
   font-size: 14px;
-  color: #333;
+  color: #444;
 }
 
-.signup-link a {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: bold;
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-top: 10px;
+  margin-left: 5px;
 }
 
-.signup-link a:hover {
-  text-decoration: underline;
+.checkbox-container input {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  outline: none;
+}
+
+.checkbox-container label {
+  font-size: 14px;
+  color: #444;
 }
 
 @keyframes fadeIn {
