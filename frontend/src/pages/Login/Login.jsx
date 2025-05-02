@@ -1,9 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./Login.css";
-import { getCSRFToken } from '../../utils/csrf';
-import { useNavigate } from "react-router-dom";
+import { getCSRFToken } from "../../utils/csrf";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const { setIsLoggedIn } = useContext(AuthContext);
@@ -15,13 +16,29 @@ const Login = () => {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
+    const navigate = useNavigate();
+    const location = useLocation();
+    const csrfToken = getCSRFToken();
+
+    useEffect(() => {
+        const query = new URLSearchParams(location.search);
+        const verified = query.get("verified");
+
+        if (verified === "true" && !sessionStorage.getItem("verifiedToastShown")) {
+            toast.success("✅ Email verified! You can now log in.", {
+                position: "top-center"
+            });
+            sessionStorage.setItem("verifiedToastShown", "true");
+
+            query.delete("verified");
+            navigate({ pathname: "/login", search: query.toString() }, { replace: true });
+        }
+    }, [location.search, navigate]);
+
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-
-    const navigate = useNavigate();
-    const csrfToken = getCSRFToken();
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,7 +55,7 @@ const Login = () => {
                         "Content-Type": "application/json",
                         "X-CSRFToken": csrfToken,
                     },
-                    withCredentials: true, // VERY IMPORTANT for CSRF cookie and session
+                    withCredentials: true,
                 }
             );
 
@@ -47,7 +64,9 @@ const Login = () => {
             navigate("/");
         } catch (error) {
             setError(true);
-            setErrorMessage("Login failed. Check credentials.");
+            setErrorMessage(
+                error?.response?.data?.error || "Login failed. Check credentials."
+            );
             console.error("Login Error:", error);
         }
     };

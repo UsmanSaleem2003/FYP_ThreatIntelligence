@@ -150,15 +150,6 @@ const RegistrationPortal = () => {
                             />
                             Admin Access
                         </label>
-                        <label>
-                            <input
-                                type="checkbox"
-                                name="is_active"
-                                checked={formData.is_active}
-                                onChange={handleChange}
-                            />
-                            Is Active
-                        </label>
                     </div>
 
                     <button type="submit" className="signup-btn">Signup</button>

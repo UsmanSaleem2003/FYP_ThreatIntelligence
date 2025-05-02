@@ -43,6 +43,7 @@ export default function Sidebar() {
     const logout = () => {
         localStorage.removeItem("access");
         window.location.href = "/login";
+        sessionStorage.removeItem("verifiedToastShown");
     };
 
     const refreshUserData = () => {

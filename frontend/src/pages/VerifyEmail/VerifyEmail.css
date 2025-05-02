@@ -1,0 +1,20 @@
+.verify-email-container {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #f9f9f9;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.verify-email-container h2 {
+  color: #0d2c56;
+  font-size: 1.8rem;
+  max-width: 500px;
+  line-height: 1.6;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
