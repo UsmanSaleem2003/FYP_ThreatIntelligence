@@ -1,0 +1,191 @@
+.dashboard {
+  padding: 5px 20px;
+  margin: 0px;
+  font-family: Arial, sans-serif;
+  background: #f3f6fa;
+  margin-left: 30px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgb(13, 13, 71);
+  height: 50px;
+  margin-bottom: 15px;
+}
+
+.user-dashboard-text {
+  font-size: 30px;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.hamburger-icon {
+  font-size: 32px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.top-cards {
+  display: flex;
+  gap: 78px;
+  justify-content: space-around;
+  width: fit-content;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  width: 220px;
+  height: 110px;
+  position: relative;
+  cursor: default;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out, transform 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 10px 20px rgba(0, 43, 91, 0.3), 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card h3 {
+  font-size: 24px;
+  margin: 0;
+  font-weight: 200;
+  letter-spacing: 0.5px;
+  color: rgb(0, 0, 0);
+}
+
+.card-icon {
+  height: 40px;
+  width: 40px;
+  font-size: 18px;
+  color: #444;
+  cursor: pointer;
+}
+
+.card-value {
+  margin-top: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.earning,
+.earning h3 {
+  font-weight: 400;
+  color: white;
+  background: #002b5b;
+  color: white;
+}
+
+.chart {
+  display: flex;
+  flex-direction: row;
+}
+
+.vertical-charts {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  gap: 5px;
+  flex-grow: 1;
+}
+
+.chart-container {
+  background: white;
+  padding: 5px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 91%;
+  text-align: center;
+}
+
+.side-chart {
+  background: white;
+  border-radius: 8px;
+  margin-top: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 220px;
+  text-align: center;
+  padding: 15px;
+  margin-right: 12px;
+}
+
+.ppie {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.percentage-label {
+  position: relative;
+  bottom: 16.5%;
+  left: 1%;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.pie-text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 20px;
+  font-weight: 200;
+}
+
+.check-btn {
+  background: #f5a623;
+  border: none;
+  padding: 15px 35px;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 35px;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ebda47, #3a355a);
+  border-radius: 6px;
+  border: 2px solid #ecf0f1;
+  background-size: 200% 200%;
+  animation: moveGradient 3s infinite alternate;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f5f6fa;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #322c53, #d1c558);
+
+  transition: background 0.3s ease-in-out;
+}
+
+@keyframes moveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

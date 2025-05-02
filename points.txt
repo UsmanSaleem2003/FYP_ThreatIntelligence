@@ -1,3 +1,6 @@
+Url of admin panel : http://127.0.0.1:8000/admin/
+
+
 run virtual environment on directory: 
 ./FYPproject
 
