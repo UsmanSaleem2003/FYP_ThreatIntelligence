@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./Login.css";
+import { Link } from "react-router-dom";
 import { getCSRFToken } from "../../utils/csrf";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -103,6 +104,10 @@ const Login = () => {
                     </div>
                     {error && <div className="error-message">{errorMessage}</div>}
                     <button type="submit" className="login-btn">Login</button>
+                    <p className="forgot-link">
+                        <Link to="/reset-password">Forgot Password?</Link>
+                    </p>
+
                 </form>
             </div>
         </div>

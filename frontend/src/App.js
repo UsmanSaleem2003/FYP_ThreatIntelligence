@@ -6,6 +6,10 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import RegistrationPortal from "./pages/registration_portal/registration_portal";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
+// import ResetPassword from "./pages/reset_password/reset_password";
+import ResetPassword from "./pages/reset_password/reset_password";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+
 import PrivateRoute from "./utils/PrivateRoute";
 import AuthContext from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
@@ -27,6 +31,14 @@ function App() {
               <Route path="/login" element={isLoggedIn ? <Navigate to="/" replace /> : <Login />} />
               <Route path="/registration-portal" element={isLoggedIn ? <Navigate to="/" replace /> : <RegistrationPortal />} />
               <Route path="/verify-email" element={<VerifyEmail />} />
+              <Route
+                path="/reset-password"
+                element={
+                  window.location.search.includes("uid") && window.location.search.includes("token")
+                    ? <ResetPassword />
+                    : <ForgotPassword />
+                }
+              />
               <Route path="*" element={<Navigate to={isLoggedIn ? "/" : "/login"} replace />} />
             </Routes>
             <ToastContainer

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./registration_portal.css";
 import axios from 'axios';
 import { getCSRFToken } from '../../utils/csrf';
@@ -19,6 +19,7 @@ const RegistrationPortal = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -36,6 +37,8 @@ const RegistrationPortal = () => {
             setErrorMessage("Passwords do not match.");
             return;
         }
+
+        setLoading(true); // Disable button
 
         const csrfToken = getCSRFToken();
         try {
@@ -56,6 +59,7 @@ const RegistrationPortal = () => {
             } else {
                 setError(true);
                 setErrorMessage(response.data?.email || response.data?.username || "Registration failed.");
+                setLoading(false); // Re-enable if not successful
             }
         } catch (error) {
             setError(true);
@@ -70,6 +74,7 @@ const RegistrationPortal = () => {
             } else {
                 setErrorMessage("An unexpected error occurred.");
             }
+            setLoading(false); // Re-enable on failure
         }
     };
 
@@ -152,7 +157,9 @@ const RegistrationPortal = () => {
                         </label>
                     </div>
 
-                    <button type="submit" className="signup-btn">Signup</button>
+                    <button type="submit" className="signup-btn" disabled={loading}>
+                        {loading ? "Registering..." : "Register"}
+                    </button>
                     {error && <div className="error-message">{errorMessage}</div>}
                 </form>
             </div>

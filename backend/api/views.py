@@ -10,8 +10,11 @@ from rest_framework.permissions import IsAuthenticated
 from django.core.mail import send_mail
 from django.conf import settings
 from .utils import generate_email_token
-from django.shortcuts import redirect
 from .utils import verify_email_token
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -114,3 +117,54 @@ def get_user_profile(request):
         "date_joined": user.date_joined,
         "last_login": user.last_login,
     })
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def request_password_reset(request):
+    email = request.data.get('email')
+    if not email:
+        return Response({'error': 'Email is required'}, status=400)
+
+    try:
+        user = User.objects.get(email=email)
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+
+        reset_link = f"http://localhost:3000/reset-password?uid={uid}&token={token}"
+        send_mail(
+            "Password Reset - Threat Intelligence",
+            f"Click the link below to reset your password (valid for 1 hour):\n{reset_link}",
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+            fail_silently=False,
+        )
+
+        return Response({"message": "Password reset email sent."})
+
+    except User.DoesNotExist:
+        return Response({"error": "No user found with this email."}, status=404)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def reset_password_confirm(request):
+    uidb64 = request.data.get("uid")
+    token = request.data.get("token")
+    new_password = request.data.get("new_password")
+
+    if not (uidb64 and token and new_password):
+        return Response({'error': 'All fields are required'}, status=400)
+
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+
+        if default_token_generator.check_token(user, token):
+            user.set_password(new_password)
+            user.save()
+            return Response({'message': 'Password has been reset.'})
+        else:
+            return Response({'error': 'Invalid or expired token'}, status=400)
+
+    except (User.DoesNotExist, ValueError, TypeError):
+        return Response({'error': 'Invalid user'}, status=400)

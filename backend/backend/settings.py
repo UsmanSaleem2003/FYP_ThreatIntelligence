@@ -105,8 +105,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ✅ CORS & CSRF for React and Django admin
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # React
-    "http://127.0.0.1:8000",  # Django
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
     "http://localhost:8000",
 ]
 
@@ -116,6 +116,10 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # For testing
-DEFAULT_FROM_EMAIL = 'noreply@threatintel.local'
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

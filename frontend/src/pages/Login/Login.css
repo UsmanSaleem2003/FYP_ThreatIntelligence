@@ -79,19 +79,18 @@ input {
   font-weight: bold;
 }
 
-.signup-link {
-  margin-top: 15px;
-  font-size: 14px;
-  color: #333;
+.forgot-link {
+  margin-top: 10px;
+  text-align: end;
+  font-size: 16px;
 }
 
-.signup-link a {
+.forgot-link a {
   color: #007bff;
   text-decoration: none;
-  font-weight: bold;
 }
 
-.signup-link a:hover {
+.forgot-link a:hover {
   text-decoration: underline;
 }
 

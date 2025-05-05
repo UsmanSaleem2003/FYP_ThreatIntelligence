@@ -13,7 +13,7 @@ database password is: Fyp2
 
 
 start the project: run command in directory: ./FYPproject/backend
-command to run: python manage.py startapp api
+command to run: python manage.py runserver
 
 
 A)_ In directory: ./FYPproject/backend: 
